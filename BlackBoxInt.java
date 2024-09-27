@@ -1,5 +1,3 @@
-package blackBoxInteger;
-
 public class BlackBoxInt {
 
 	private static final int DEFAULT_VALUE = 0;
