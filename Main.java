@@ -1,5 +1,3 @@
-package blackBoxInteger;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -8,28 +6,28 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
-        Class<BlackBoxInt> clazz = BlackBoxInt.class; //клас
-        Constructor<BlackBoxInt> constructor = clazz.getDeclaredConstructor(); //private конструктор без аргументи
-        constructor.setAccessible(true); //правим конструктора достъпен - мога да го изпозлвам
-        BlackBoxInt blackBoxInt = constructor.newInstance(); //създаваме обект
+        Class<BlackBoxInt> clazz = BlackBoxInt.class;
+        Constructor<BlackBoxInt> constructor = clazz.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        BlackBoxInt blackBoxInt = constructor.newInstance(); 
 
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
 
         while(!command.equals("END")) {
-            //command = "{command name}_{value}"
-            String methodName = command.split("_")[0]; //метода, който трябва да изпълня
-            int argument = Integer.parseInt(command.split("_")[1]); //стойността, с която изпълняваме метода
+            
+            String methodName = command.split("_")[0];
+            int argument = Integer.parseInt(command.split("_")[1]); 
 
-            Method method = clazz.getDeclaredMethod(methodName, int.class); //достъпваме метод с въведеното име
-            method.setAccessible(true); //мога да изпълня метода
-            //blackBoxInt.add(argument);
-            method.invoke(blackBoxInt, argument); //изпълняваме метода с дадения аргумент
+            Method method = clazz.getDeclaredMethod(methodName, int.class); 
+            method.setAccessible(true); 
+          
+            method.invoke(blackBoxInt, argument); 
 
 
-            Field innerValueField = clazz.getDeclaredField("innerValue"); //взимаме числото в кутията
+            Field innerValueField = clazz.getDeclaredField("innerValue");
             innerValueField.setAccessible(true);
-            System.out.println(innerValueField.get(blackBoxInt)); //стойността на полето
+            System.out.println(innerValueField.get(blackBoxInt)); 
 
             command = scanner.nextLine();
         }
